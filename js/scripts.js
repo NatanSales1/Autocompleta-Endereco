@@ -1,7 +1,7 @@
 const addressForm = document.querySelector('#address-form')
 const cepInput = document.querySelector('#cep')
-const addresInput = document.querySelector('#rua')
-const cityInput = document.querySelector('#cidade')
+const addressInput = document.querySelector('#address')
+const cityInput = document.querySelector('#city')
 const neighborhoodInput = document.querySelector('#neighborhood')
 const regionInput = document.querySelector('#region')
 const formInputs = document.querySelectorAll('[data-input]')
@@ -39,9 +39,7 @@ const getAddress = async cep => {
   cepInput.blur()
 
   const apiUrl = `https://viacep.com.br/ws/${cep}/json/`
-
   const response = await fetch(apiUrl)
-
   const data = await response.json()
 
   console.log(data)
@@ -58,6 +56,30 @@ const getAddress = async cep => {
     toggleLoader()
     toggleMessage('CEP Inválido, tente novamente.')
     return
+  }
+
+  if (addressInput.value === '') {
+    toggleDisabled()
+  }
+
+  addressInput.value = data.logradouro
+  neighborhoodInput.value = data.bairro
+  cityInput.value = data.localidade
+  regionInput.value = data.uf
+
+  toggleLoader()
+}
+
+//Adicionar ou remover um atributo disabilitado:
+const toggleDisabled = () => {
+  if (cityInput.hasAttribute('disabled')) {
+    formInputs.forEach(input => {
+      input.removeAttribute('disabled')
+    })
+  } else {
+    formInputs.forEach(input => {
+      input.setAttribute('disabled', 'disabled')
+    })
   }
 }
 
