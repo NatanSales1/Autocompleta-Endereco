@@ -36,7 +36,12 @@
 }
 
 #message {
-  width: 40%;
+  width: 30%;
+}
+
+#close-message {
+  background-color: var(--secondary-color);
+  border: none;
 }
 
 .alert.alert-light p {

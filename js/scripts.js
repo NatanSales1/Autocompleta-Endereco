@@ -43,8 +43,6 @@ const getAddress = async cep => {
   const data = await response.json()
 
   console.log(data)
-  //console.log(formInputs)
-  //console.log(data.erro)
 
   //Mostrar erro e resetar form:
   if (data.erro === 'true') {
@@ -102,5 +100,21 @@ const toggleMessage = msg => {
   messageElement.classList.toggle('hide')
 }
 
-// Close message modal
+//Fechar menssagem:
 closeButton.addEventListener('click', () => toggleMessage())
+
+//Salvar endereço:
+addressForm.addEventListener('submit', e => {
+  e.preventDefault()
+
+  toggleLoader()
+
+  setTimeout(() => {
+    toggleLoader()
+
+    toggleMessage('Endereço salvo com sucesso!')
+
+    addressForm.reset()
+    toggleDisabled()
+  }, 1500)
+})
